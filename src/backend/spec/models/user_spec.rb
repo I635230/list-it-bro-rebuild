@@ -7,8 +7,7 @@ RSpec.describe User, type: :model do
   end
 
   it '同じidのUserモデルが登録できない' do
-    user1 = User.new(id: 1)
-    user1.save
+    user1 = User.create(id: 1)
     user2 = User.new(id: 1)
     expect(user2).not_to be_valid
   end
