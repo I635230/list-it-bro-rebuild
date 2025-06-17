@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_17_133942) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_17_145644) do
   create_table "broadcasters", id: :bigint, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "login"
     t.string "display_name"
@@ -19,6 +19,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_133942) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["display_name"], name: "index_broadcasters_on_display_name"
+  end
+
+  create_table "games", id: :bigint, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "box_art_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_games_on_name"
   end
 
   create_table "users", id: :bigint, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
