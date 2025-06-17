@@ -1,0 +1,17 @@
+{
+  "name": "Ruby DevContainer",
+  "dockerComposeFile": "../compose.yml",
+  "service": "backend",
+  "workspaceFolder": "/app",
+  "settings": {
+    "editor.formatOnSave": true,
+    "[ruby]": {
+      "editor.defaultFormatter": "misogi.ruby-rubocop"
+    }, 
+  },
+  "extensions": [
+    "misogi.ruby-rubocop",
+    "rebornix.Ruby"
+  ],
+  "postCreateCommand": "bundle install || true"
+}
