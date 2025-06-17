@@ -1,4 +1,5 @@
 class CreateUsers < ActiveRecord::Migration[8.0]
+  # The table includes columns for login, display name (with an index), profile image URL, refresh token, and timestamps.
   def change
     create_table :users, id: false do |t|
       t.column :id, 'BIGINT PRIMARY KEY'
