@@ -1,8 +1,13 @@
-# Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+plugins: 
+  - rubocop-rspec
+
+# すべての新しいCopを自動で有効にする
+AllCops:
+  NewCops: enable
+
+# 中括弧の内側に半角スペースを必要とする
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
