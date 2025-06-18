@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :game do
-    id { 1 }
+    sequence(:id) { |n| "#{n}" }
     name { "サンプルゲーム" }
     box_art_url { "box_art_url" }
   end

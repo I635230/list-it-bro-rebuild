@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    id { 1 }
+    sequence(:id) { |n| "#{n}" }
     login { "sample_user" }
     display_name { "サンプルユーザー" }
     profile_image_url { "profile_image_url" }

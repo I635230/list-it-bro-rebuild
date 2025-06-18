@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :broadcaster do
-    id { 1 }
+    sequence(:id) { |n| "#{n}" }
     login { "sample_broadcaster" }
     display_name { "サンプル配信者" }
     profile_image_url { "profile_image_url" }
-    language { "Japanese" }
+    language { "ja" }
   end
 end
