@@ -4,7 +4,5 @@ class Clip < ApplicationRecord
   belongs_to :game
 
   # バリデーション
-  validates :slug, uniqueness: true
-  validates :broadcaster_id, presence: true
-  validates :game_id, presence: true
+  validates :slug, presence: true, uniqueness: true
 end

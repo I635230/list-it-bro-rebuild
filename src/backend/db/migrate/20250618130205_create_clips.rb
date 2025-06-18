@@ -1,7 +1,7 @@
 class CreateClips < ActiveRecord::Migration[8.0]
   def change
     create_table :clips do |t|
-      t.string :slug
+      t.string :slug, null: false
       t.references :broadcaster, null: false, foreign_key: true
       t.string :broadcaster_name
       t.integer :creator_id

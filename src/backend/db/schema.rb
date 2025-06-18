@@ -22,7 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_130205) do
   end
 
   create_table "clips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "slug"
+    t.string "slug", null: false
     t.bigint "broadcaster_id", null: false
     t.string "broadcaster_name"
     t.integer "creator_id"
