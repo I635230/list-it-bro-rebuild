@@ -5,4 +5,5 @@ class PlaylistClip < ApplicationRecord
   
   # バリデーション
   validates :playlist_id, uniqueness: { scope: :clip_id }
+  validates :order, presence: true
 end

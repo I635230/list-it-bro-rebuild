@@ -67,6 +67,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_150336) do
   create_table "playlist_clips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "playlist_id", null: false
     t.bigint "clip_id", null: false
+    t.integer "order", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["clip_id"], name: "index_playlist_clips_on_clip_id"
