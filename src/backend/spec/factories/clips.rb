@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :clip do
-    sequence(:id) { |n| "#{n}" }
     sequence(:slug) { |n| "slug-#{n}" }
     creator_id { 1 }
     creator_name { "サンプルユーザー" }
