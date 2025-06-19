@@ -4,7 +4,7 @@ class Playlist < ApplicationRecord
   has_many :playlist_clips, dependent: :destroy
   has_many :clips, through: :playlist_clips
   has_many :favorites, dependent: :destroy
-  has_many :fav_users, through: :favirites, source: :user
+  has_many :fav_users, through: :favorites, source: :user
 
   # バリデーション
   validates :slug, presence: true, uniqueness: true
