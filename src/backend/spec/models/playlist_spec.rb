@@ -13,7 +13,7 @@ RSpec.describe Playlist, type: :model do
   end
 
   it 'publicなしでplaylistモデルを生成できない' do
-    playlist = build(:playlist, slug: nil)
+    playlist = build(:playlist, public: nil)
     expect(playlist).not_to be_valid
   end
 end
