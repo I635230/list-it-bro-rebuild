@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_19_141450) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_19_150336) do
   create_table "broadcasters", id: :bigint, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "login"
     t.string "display_name"
@@ -44,6 +44,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_141450) do
     t.index ["slug"], name: "index_clips_on_slug", unique: true
     t.index ["title"], name: "index_clips_on_title"
     t.index ["view_count"], name: "index_clips_on_view_count"
+  end
+
+  create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "playlist_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["playlist_id", "user_id"], name: "index_favorites_on_playlist_id_and_user_id", unique: true
+    t.index ["playlist_id"], name: "index_favorites_on_playlist_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "games", id: :bigint, default: nil, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -91,6 +101,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_141450) do
 
   add_foreign_key "clips", "broadcasters"
   add_foreign_key "clips", "games"
+  add_foreign_key "favorites", "playlists"
+  add_foreign_key "favorites", "users"
   add_foreign_key "playlist_clips", "clips"
   add_foreign_key "playlist_clips", "playlists"
   add_foreign_key "playlists", "users"
