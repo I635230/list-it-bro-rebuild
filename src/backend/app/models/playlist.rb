@@ -17,4 +17,17 @@ class Playlist < ApplicationRecord
   # コールバック
   before_create { self.slug = SecureRandom.uuid }
   before_save { self.search_keywords = "#{self&.title} #{self.user&.display_name}" }
+
+  # メソッド
+  def add(clip)
+    self.clips << clip
+  end
+
+  def remove(clip)
+    self.clips.destroy(clip)
+  end
+
+  def favorited?(user)
+    self.fav_users.include?(user)
+  end
 end

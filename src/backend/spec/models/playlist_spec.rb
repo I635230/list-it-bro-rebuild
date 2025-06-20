@@ -23,4 +23,26 @@ RSpec.describe Playlist, type: :model do
     playlist.save!
     expect(playlist.search_keywords).not_to be_nil
   end
+
+  it 'playlistにclipを追加できる' do
+    playlist = create(:playlist)
+    clip = create(:clip)
+    playlist.add(clip)
+    expect(playlist.clips).to include(clip)
+  end
+
+  it 'playlistからclipを削除できる' do
+    playlist = create(:playlist)
+    clip = create(:clip)
+    playlist.add(clip)
+    playlist.remove(clip)
+    expect(playlist.clips).not_to include(clip)
+  end
+
+  it 'userがplaylistをfavしているか確認できる' do
+    user = create(:user)
+    playlist = create(:playlist)
+    user.fav_playlists << playlist
+    expect(playlist.favorited?(user)).to eq(true)
+  end
 end
