@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   # 他モデルとの関係
+  has_many :playlists, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :fav_playlists, through: :favorites, source: :playlist
 
