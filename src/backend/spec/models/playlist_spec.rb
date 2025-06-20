@@ -7,6 +7,12 @@ RSpec.describe Playlist, type: :model do
     expect(playlist.slug).not_to be_nil
   end
 
+  it 'slugで検索できる' do
+    playlist = create(:playlist)
+    found_playlist = Playlist.friendly.find(playlist.slug)
+    expect(found_playlist).to eq(playlist)
+  end
+
   it 'publicなしでplaylistモデルを生成できない' do
     playlist = build(:playlist, public: nil)
     expect(playlist).not_to be_valid

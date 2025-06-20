@@ -1,4 +1,8 @@
 class Clip < ApplicationRecord
+  # 代理IDの設定
+  include FriendlyId
+  friendly_id :slug, use: :finders
+
   # 他モデルとの関係
   belongs_to :broadcaster
   belongs_to :game
