@@ -28,6 +28,6 @@ class Playlist < ApplicationRecord
   end
 
   def favorited?(user)
-    self.fav_users.include?(user)
+    self.fav_users.exists?(user.id)
   end
 end
