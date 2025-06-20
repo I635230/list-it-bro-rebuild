@@ -7,6 +7,10 @@ class Playlist < ApplicationRecord
   has_many :fav_users, through: :favorites, source: :user
 
   # バリデーション
-  validates :slug, presence: true, uniqueness: true
+  validates :slug, uniqueness: true
   validates :public, presence: true
+
+  # コールバック
+  before_create { self.slug = SecureRandom.uuid }
+  before_save { self.search_keywords = "#{self.title} #{self.user.display_name}" }
 end

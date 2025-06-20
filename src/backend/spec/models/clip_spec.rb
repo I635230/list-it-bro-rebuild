@@ -11,4 +11,12 @@ RSpec.describe Clip, type: :model do
     clip2 = build(:clip, slug: "duplicate")
     expect(clip2).not_to be_valid
   end
+
+  it 'search_keywordsへのbefore_saveが正常に機能している' do
+    clip = build(:clip)
+    expect(clip.search_keywords).to eq(nil)
+    clip.save!
+    expect(clip.search_keywords).not_to eq(nil)
+  end
 end
+ 
