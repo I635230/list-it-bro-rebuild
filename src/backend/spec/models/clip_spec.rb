@@ -12,6 +12,12 @@ RSpec.describe Clip, type: :model do
     expect(clip2).not_to be_valid
   end
 
+  it 'slugで検索できる' do
+    clip = create(:clip)
+    found_clip = Clip.friendly.find(clip.slug)
+    expect(found_clip).to eq(clip)
+  end
+
   it 'search_keywordsは保存時に自動生成される' do
     clip = build(:clip, search_keywords: nil)
     clip.save!
