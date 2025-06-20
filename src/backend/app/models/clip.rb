@@ -7,4 +7,7 @@ class Clip < ApplicationRecord
 
   # バリデーション
   validates :slug, presence: true, uniqueness: true
+
+  # コールバック
+  before_save { self.search_keywords = "#{self&.title} #{self.broadcaster&.display_name} #{self.game&.name}" }
 end
