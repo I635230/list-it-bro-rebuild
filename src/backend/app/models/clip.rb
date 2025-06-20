@@ -9,5 +9,5 @@ class Clip < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
 
   # コールバック
-  before_save { self.search_keywords = "#{self.title} #{self.broadcaster.display_name} #{self.game.name}" }
+  before_save { self.search_keywords = "#{self&.title} #{self.broadcaster&.display_name} #{self.game&.name}" }
 end

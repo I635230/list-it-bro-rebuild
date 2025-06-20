@@ -12,5 +12,5 @@ class Playlist < ApplicationRecord
 
   # コールバック
   before_create { self.slug = SecureRandom.uuid }
-  before_save { self.search_keywords = "#{self.title} #{self.user.display_name}" }
+  before_save { self.search_keywords = "#{self&.title} #{self.user&.display_name}" }
 end
