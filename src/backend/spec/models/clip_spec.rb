@@ -19,4 +19,3 @@ RSpec.describe Clip, type: :model do
     expect(clip.search_keywords).not_to eq(nil)
   end
 end
- 
