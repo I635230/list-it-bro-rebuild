@@ -11,4 +11,26 @@ RSpec.describe User, type: :model do
     user2 = build(:user, id: 1)
     expect(user2).not_to be_valid
   end
+
+  it 'playlistをfavできる' do
+    user = create(:user)
+    playlist = create(:playlist)
+    user.favorite(playlist)
+    expect(user.fav_playlists).to include(playlist)
+  end
+
+  it 'playlistのfavを解除できる' do
+    user = create(:user)
+    playlist = create(:playlist)    
+    user.favorite(playlist)
+    user.unfavorite(playlist)
+    expect(user.fav_playlists).not_to include(playlist)
+  end
+
+  it 'playlistをfavしているか確認できる' do
+    user = create(:user)
+    playlist = create(:playlist)
+    user.favorite(playlist)
+    expect(user.favorited?(playlist)).to eq(true)
+  end
 end
