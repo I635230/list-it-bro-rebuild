@@ -6,4 +6,17 @@ class User < ApplicationRecord
 
   # バリデーション
   validates :id, presence: true, uniqueness: true
+
+  # メソッド
+  def favorite(playlist)
+    self.fav_playlists << playlist
+  end
+
+  def unfavorite(playlist)
+    self.fav_playlists.destroy(playlist)
+  end
+
+  def favorited?(playlist)
+    self.fav_playlists.exists?(playlist.id)
+  end
 end
