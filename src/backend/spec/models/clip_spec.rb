@@ -12,10 +12,9 @@ RSpec.describe Clip, type: :model do
     expect(clip2).not_to be_valid
   end
 
-  it 'search_keywordsへのbefore_saveが正常に機能している' do
-    clip = build(:clip)
-    expect(clip.search_keywords).to eq(nil)
+  it 'search_keywordsは保存時に自動生成される' do
+    clip = build(:clip, search_keywords: nil)
     clip.save!
-    expect(clip.search_keywords).not_to eq(nil)
+    expect(clip.search_keywords).not_to be_nil
   end
 end

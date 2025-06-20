@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Playlist, type: :model do
-  it 'slugは保存時に自動生成される' do
+  it 'slugは初回保存時に自動生成される' do
     playlist = build(:playlist, slug: nil)
     playlist.save!
-    expect(playlist.slug).not_to be_valid
+    expect(playlist.slug).not_to be_nil
   end
 
   it 'publicなしでplaylistモデルを生成できない' do
@@ -12,10 +12,9 @@ RSpec.describe Playlist, type: :model do
     expect(playlist).not_to be_valid
   end
 
-  it 'search_keywordsへのbefore_saveが正常に機能している' do
-    playlist = build(:playlist)
-    expect(playlist.search_keywords).to eq(nil)
+  it 'search_keywordsは保存時に自動生成される' do
+    playlist = build(:playlist, search_keywords: nil)
     playlist.save!
-    expect(playlist.search_keywords).not_to eq(nil)
+    expect(playlist.search_keywords).not_to be_nil
   end
 end
