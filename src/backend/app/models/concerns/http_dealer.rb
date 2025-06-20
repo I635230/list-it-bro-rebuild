@@ -68,6 +68,6 @@ module HttpDealer
   # http_errorを扱う関数
   def handle_http_error(error, operation)
     Rails.logger.error "#{operation}に失敗しました: #{error.message}"
-    railse "#{operation}に失敗しました: #{error.message}"
+    raise "#{operation}に失敗しました: #{error.message}"
   end
 end
