@@ -1,7 +1,7 @@
 # HTTPリクエストを処理するためのモジュール
 module HttpDealer
   # デフォルトタイムアウト設定
-  DEFAULT_TIMEOUT = 30.seconds
+  DEFAULT_TIMEOUT = 30
 
   def get_request(header, uri)
     # 引数の確認
