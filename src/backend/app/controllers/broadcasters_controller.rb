@@ -15,7 +15,6 @@ class BroadcastersController < ApplicationController
     broadcaster_id = params[:broadcaster_id] || get_broadcaster_id(clip_id)
 
     # 準備
-    header = { "Authorization" => ENV["APP_ACCESS_TOKEN"],  "Client-id" => ENV["CLIENT_ID"] }
     uri = "https://api.twitch.tv/helix/users?id=#{broadcaster_id}"
 
     # 中断処理
@@ -25,7 +24,7 @@ class BroadcastersController < ApplicationController
     end
 
     # データ取得
-    response = get_request(header, uri)
+    response = get_request(twitch_api_header("app-access-token"), uri)
     data = response["data"][0]
 
     # 配信者を作成
@@ -44,11 +43,10 @@ class BroadcastersController < ApplicationController
   # 配信者IDを取得する関数
   def get_broadcaster_id(clip_id)
     # 準備
-    header = { "Authorization" => ENV["APP_ACCESS_TOKEN"],  "Client-id" => ENV["CLIENT_ID"] }
     uri = "https://api.twitch.tv/helix/clips?id=#{clip_id}"
 
     # データ取得
-    response = get_request(header, uri)
+    response = get_request(twitch_api_header("app-access-token"), uri)
     data = response["data"][0]
 
     # 出力
@@ -58,11 +56,10 @@ class BroadcastersController < ApplicationController
   # 配信者の最も人気なクリップの言語を取得する関数
   def get_first_clip_language(broadcaster_id)
     # 準備
-    header = { "Authorization" => ENV["APP_ACCESS_TOKEN"],  "Client-id" => ENV["CLIENT_ID"] }
     uri = "https://api.twitch.tv/helix/clips?broadcaster_id=#{broadcaster_id}&first=1"
 
     # データ取得
-    response = get_request(header, uri)
+    response = get_request(twitch_api_header("app-access-token"), uri)
     data = response["data"][0]
 
     # 出力
