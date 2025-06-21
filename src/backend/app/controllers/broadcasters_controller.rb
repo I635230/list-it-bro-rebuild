@@ -25,14 +25,21 @@ class BroadcastersController < ApplicationController
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
-    data = response["data"][0]
+    data = response.dig("data", 0)
 
-    # 配信者を作成
-    @broadcaster = Broadcaster.create!(id: data["id"],
-                                      login: data["login"],
-                                      display_name: data["display_name"],
-                                      language: get_first_clip_language(broadcaster_id),
-                                      profile_image_url: data["profile_image_url"])
+    # エラーハンドリング
+    unless data
+      render status: :unprocessable_entity, json: { error: "Broadcasterが見つかりませんでした" }
+      return
+    end
+
+    # 配信者を作成してDBに保存
+    begin
+      @broadcaster = build_broadcaster(data)
+    rescue ActiveRecord::RecordInvalid => e
+      render status: :unprocessable_entity, json: { error: e.record.errors.full_messages.to_sentence }
+      return
+    end
 
     # 出力
     render status: :created, json: @broadcaster
@@ -47,10 +54,13 @@ class BroadcastersController < ApplicationController
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
-    data = response["data"][0]
+    data = response.dig("data", 0)
+
+    # エラーハンドリング
+    raise StandardError, "broadcaster_idの取得に失敗しました" unless data
 
     # 出力
-    broadcaster_id = data["broadcaster_id"]
+    data["broadcaster_id"]
   end
 
   # 配信者の最も人気なクリップの言語を取得する関数
@@ -60,9 +70,17 @@ class BroadcastersController < ApplicationController
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
-    data = response["data"][0]
 
     # 出力
-    data["language"]
+    response.dig("data", 0, "language") || "en"
+  end
+
+  # 配信者を作成してDBに保存する関数
+  def build_broadcaster(data)
+    Broadcaster.create!(id: data["id"],
+                        login: data["login"],
+                        display_name: data["display_name"],
+                        language: get_first_clip_language(data["id"]),
+                        profile_image_url: data["profile_image_url"])
   end
 end
