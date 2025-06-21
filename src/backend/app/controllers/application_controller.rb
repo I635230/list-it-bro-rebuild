@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::API
+  # すべてのコントローラにHttpDealerをincludeする
+  include HttpDealer
+
   private
 
   # Twitch APIへのリクエストのヘッダー
