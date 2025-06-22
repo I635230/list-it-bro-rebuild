@@ -23,6 +23,7 @@ services:
     volumes:
       # カレントディレクトリの内容をコンテナ内の/appにマウントする
       - ./src/backend:/app
+      - bundle:/usr/local/bundle # gem インストール先を volume に退避
     env_file:
       - .env
     ports:
@@ -45,3 +46,4 @@ services:
       - ${NEXTJS_PORT}:3000 # 環境変数（.env）から参照
 volumes:
   db-data:
+  bundle: 
