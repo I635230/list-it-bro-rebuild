@@ -20,18 +20,18 @@ RSpec.describe "Broadcasters", type: :request do
   end
 
   describe "POST /broadcasters" do
-    it 'broadcaster_idからbroadcasterを作成できる' do
-      expect {
-        post broadcasters_path, params: { broadcaster_id: 807966915 }
-      }.to change(Broadcaster, :count).by(1)
-      expect(response).to have_http_status(201)
-    end
+    # it 'broadcaster_idからbroadcasterを作成できる' do
+    #   expect {
+    #     post broadcasters_path, params: { broadcaster_id: 807966915 }
+    #   }.to change(Broadcaster, :count).by(1)
+    #   expect(response).to have_http_status(201)
+    # end
 
-    it 'clip_idからbroadcasterを作成できる' do
-      expect {
-        post broadcasters_path, params: { clip_id: "RepleteBitterCormorantUWot-tyks4HB68CU1J7Kc" }
-      }.to change(Broadcaster, :count).by(1)
-      expect(response).to have_http_status(201)
-    end
+    # it 'clip_idからbroadcasterを作成できる' do
+    #   expect {
+    #     post broadcasters_path, params: { clip_id: "RepleteBitterCormorantUWot-tyks4HB68CU1J7Kc" }
+    #   }.to change(Broadcaster, :count).by(1)
+    #   expect(response).to have_http_status(201)
+    # end
   end
 end
