@@ -2,6 +2,7 @@ FROM ruby:3.2.2
 
 # 環境変数
 ENV APP_HOME /app
+ENV BUNDLE_PATH=/usr/local/bundle
 
 # 作業ディレクトリ指定
 WORKDIR ${APP_HOME}
