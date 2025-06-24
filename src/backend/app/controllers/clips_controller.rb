@@ -13,9 +13,11 @@ class ClipsController < ApplicationController
   def update
     # 入力
     clip_id = params[:id]
+    return render status: :bad_request, json: { error: "clip_idが必要です" } if clip_id.blank?
 
     # 準備
     @clip = Clip.find_by(slug: clip_id)
+    return render status: :not_found, json: { error: "clipが見つかりません" } unless @clip
 
     # データ取得
     view_count = get_view_count(clip_id)
@@ -24,7 +26,7 @@ class ClipsController < ApplicationController
     @clip.update(view_count: view_count)
 
     # 出力
-    render status: :created, json: @clip
+    render status: :ok, json: @clip
   rescue ActiveRecord::RecordInvalid => e
     # エラー時の出力
     render status: :unprocessable_entity, json: { error: e.record.errors.full_messages.to_sentence }
