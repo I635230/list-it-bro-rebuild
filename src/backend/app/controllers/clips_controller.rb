@@ -1,10 +1,11 @@
 class ClipsController < ApplicationController
   # 特定のクリップを出力
   def show
-    if @clip = Clip.find_by(slug: params[:id])
+    @clip = Clip.find_by(slug: params[:id])
+    if @clip
       render status: :ok, json: @clip
     else
-      render status: :unprocessable_entity
+      render status: :not_found
     end
   end
 
@@ -41,7 +42,7 @@ class ClipsController < ApplicationController
     data = response.dig("data", 0)
 
     # エラーハンドリング
-    raise "view_countの取得に失敗しました" unless data
+    raise StandardError, "view_countの取得に失敗しました" unless data
 
     # 出力
     data["view_count"]
