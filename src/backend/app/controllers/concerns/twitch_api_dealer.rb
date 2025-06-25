@@ -63,7 +63,7 @@ end
     validate_arguments!(clip_id)
 
     # 準備
-    uri = "https://api.twitch.tv/helix/clips?id=#{clip_id}"
+    uri = "https://api.twitch.tv/helix/clips?id=#{URI.encode_www_form_component(clip_id)}"
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
