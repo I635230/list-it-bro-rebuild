@@ -1,12 +1,20 @@
 class ClipsController < ApplicationController
   # 特定のクリップを出力
   def show
+    # 入力
+    clip_id = params[:id]
+
+    # paramsチェック
+    return render_bad_request if clip_id.blank?
+
+    # 検索
     @clip = Clip.find_by(slug: params[:id])
-    if @clip
-      render status: :ok, json: @clip
-    else
-      render status: :not_found
-    end
+
+    # 中断処理
+    return render_not_found unless @clip
+
+    # 出力
+    render status: :ok, json: @clip
   end
 
   # クリップ視聴数の更新
