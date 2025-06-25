@@ -4,6 +4,6 @@ module ErrorDealer
   end
 
   def validate_variable!(variable)
-    raise StandardError, "#{variable}が不正な値です" unless variable
+    raise StandardError, "変数が不正な値です" unless variable
   end
 end

@@ -5,7 +5,7 @@ module TwitchApiDealer
     validate_arguments!(broadcaster_id)
 
     # 準備
-    uri = "https://api.twitch.tv/helix/users?id=#{broadcaster_id}"
+    uri = "https://api.twitch.tv/helix/users?id=#{URI.encode_www_form_component(broadcaster_id)}"
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
@@ -24,7 +24,7 @@ module TwitchApiDealer
     validate_arguments!(clip_id)
 
     # 準備
-    uri = "https://api.twitch.tv/helix/clips?id=#{clip_id}"
+    uri = "https://api.twitch.tv/helix/clips?id=#{URI.encode_www_form_component(clip_id)}"
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
@@ -43,7 +43,7 @@ module TwitchApiDealer
     validate_arguments!(broadcaster_id)
 
     # 準備
-    uri = "https://api.twitch.tv/helix/clips?broadcaster_id=#{broadcaster_id}&first=1"
+    uri = "https://api.twitch.tv/helix/clips?broadcaster_id=#{URI.encode_www_form_component(broadcaster_id)}&first=1"
 
     # データ取得
     response = get_request(twitch_api_header("app-access-token"), uri)
