@@ -39,7 +39,7 @@ RSpec.describe "Clips", type: :request do
     it 'clipを更新できる' do
       patch clip_path(@clip.slug)
       data = JSON.parse(response.body)
-      expect(response).to have_http_status(201)
+      expect(response).to have_http_status(200)
       expect(data["view_count"]).to eq(@view_count)
     end
   end
