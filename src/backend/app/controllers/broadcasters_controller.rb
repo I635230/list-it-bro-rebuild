@@ -14,9 +14,6 @@ class BroadcastersController < ApplicationController
     clip_id = params[:clip_id]
     broadcaster_id = params[:broadcaster_id] || get_broadcaster_id(clip_id)
 
-    # 準備
-    uri = "https://api.twitch.tv/helix/users?id=#{broadcaster_id}"
-
     # 中断処理
     if @broadcaster = Broadcaster.find_by(id: broadcaster_id)
       render status: :ok, json: @broadcaster
@@ -24,56 +21,19 @@ class BroadcastersController < ApplicationController
     end
 
     # データ取得
-    response = get_request(twitch_api_header("app-access-token"), uri)
-    data = response.dig("data", 0)
-
-    # エラーハンドリング
-    unless data
-      render status: :unprocessable_entity, json: { error: "Broadcasterが見つかりませんでした" }
-      return
-    end
+    broadcaster_data = get_broadcaster_data(broadcaster_id)
 
     # 配信者を作成してDBに保存
-    begin
-      @broadcaster = build_broadcaster(data)
-    rescue ActiveRecord::RecordInvalid => e
-      render status: :unprocessable_entity, json: { error: e.record.errors.full_messages.to_sentence }
-      return
-    end
+    @broadcaster = build_broadcaster(broadcaster_data)
 
     # 出力
     render status: :created, json: @broadcaster
+  rescue ActiveRecord::RecordInvalid => e
+    # エラー時の出力
+    render status: :unprocessable_entity, json: { error: e.record.errors.full_messages.to_sentence }
   end
 
   private
-
-  # 配信者IDを取得する関数
-  def get_broadcaster_id(clip_id)
-    # 準備
-    uri = "https://api.twitch.tv/helix/clips?id=#{clip_id}"
-
-    # データ取得
-    response = get_request(twitch_api_header("app-access-token"), uri)
-    data = response.dig("data", 0)
-
-    # エラーハンドリング
-    raise StandardError, "broadcaster_idの取得に失敗しました" unless data
-
-    # 出力
-    data["broadcaster_id"]
-  end
-
-  # 配信者の最も人気なクリップの言語を取得する関数
-  def get_first_clip_language(broadcaster_id)
-    # 準備
-    uri = "https://api.twitch.tv/helix/clips?broadcaster_id=#{broadcaster_id}&first=1"
-
-    # データ取得
-    response = get_request(twitch_api_header("app-access-token"), uri)
-
-    # 出力
-    response.dig("data", 0, "language") || "en"
-  end
 
   # 配信者を作成してDBに保存する関数
   def build_broadcaster(data)
@@ -81,6 +41,6 @@ class BroadcastersController < ApplicationController
                         login: data["login"],
                         display_name: data["display_name"],
                         language: get_first_clip_language(data["id"]),
-                        profile_image_url: data["profile_image_url"])
+                        profile_image_url: data["profile_image_url"])    
   end
 end
