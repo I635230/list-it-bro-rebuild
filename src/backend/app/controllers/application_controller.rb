@@ -6,6 +6,21 @@ class ApplicationController < ActionController::API
 
   private
 
+  # bad_requestをrenderする関数
+  def render_bad_request(message = "不正なリクエストです")
+    render status: :bad_request, json: { error: message }
+  end
+
+  # not_foundをrenderする関数
+  def render_not_found(message = "リソースが見つかりません")
+    render status: :not_found, json: { error: message }
+  end
+
+  # unprocessable_entityをrenderする関数
+  def render_unprocessable_entity(e)
+    render status: :unprocessable_entity, json: { error: e.record.errors.full_messages.to_sentence }
+  end
+
   # Twitch APIへのリクエストのヘッダー
   def twitch_api_header(type, current_user = nil)
     return nil if type.blank?

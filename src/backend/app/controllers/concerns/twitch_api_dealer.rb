@@ -56,3 +56,22 @@ module TwitchApiDealer
     language
   end
 end
+
+  # クリップ視聴数を取得する関数
+  def get_view_count(clip_id)
+    # 引数チェック
+    validate_arguments!(clip_id)
+
+    # 準備
+    uri = "https://api.twitch.tv/helix/clips?id=#{URI.encode_www_form_component(clip_id)}"
+
+    # データ取得
+    response = get_request(twitch_api_header("app-access-token"), uri)
+    view_count = response.dig("data", 0, "view_count")
+
+    # エラーハンドリング
+    validate_variable!(view_count)
+
+    # 出力
+    view_count
+  end
