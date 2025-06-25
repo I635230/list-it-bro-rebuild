@@ -13,11 +13,15 @@ class ClipsController < ApplicationController
   def update
     # 入力
     clip_id = params[:id]
-    return render status: :bad_request, json: { error: "clip_idが必要です" } if clip_id.blank?
 
-    # 準備
+    # paramsチェック
+    return render_bad_request if clip_id.blank?
+
+    # 検索
     @clip = Clip.find_by(slug: clip_id)
-    return render status: :not_found, json: { error: "clipが見つかりません" } unless @clip
+
+    # 中断処理
+    return render_not_found unless @clip
 
     # データ取得
     view_count = get_view_count(clip_id)
@@ -29,24 +33,6 @@ class ClipsController < ApplicationController
     render status: :ok, json: @clip
   rescue ActiveRecord::RecordInvalid => e
     # エラー時の出力
-    render status: :unprocessable_entity, json: { error: e.record.errors.full_messages.to_sentence }
-  end
-
-  private
-
-  # クリップ視聴数を取得する関数
-  def get_view_count(clip_id)
-    # 準備
-    uri = "https://api.twitch.tv/helix/clips?id=#{clip_id}"
-
-    # データ取得
-    response = get_request(twitch_api_header("app-access-token"), uri)
-    data = response.dig("data", 0)
-
-    # エラーハンドリング
-    raise StandardError, "view_countの取得に失敗しました" unless data
-
-    # 出力
-    data["view_count"]
+    render_unprocessable_entity(e)
   end
 end
