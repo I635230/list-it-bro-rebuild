@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
-  # すべてのコントローラにHttpDealerをincludeする
+  # すべてのコントローラに以下のモジュールをincludeする
   include HttpDealer
+  include ErrorDealer
+  include TwitchApiDealer
 
   private
 
